@@ -1,0 +1,160 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+:root {
+    --bni-green: #009b4c;
+    --bni-green-dark: #007a3a;
+    --bni-orange: #ff6600;
+    --card: #ffffff;
+    --border: #e5e7eb;
+    --muted: #6b7280;
+    --radius: 10px;
+    --transition: 0.25s ease;
+}
+
+.procurement-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* ⬅ biar mulai dari atas, bukan center */
+    padding: 2rem 0;
+    background: transparent;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    /* ✅ biar tidak bikin scroll sendiri */
+    box-sizing: border-box;
+}
+
+
+
+.procurement-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+    width: 100%;
+    max-width: 850px;
+    transition: all var(--transition);
+    overflow: visible;
+    /* ✅ pastikan tidak scroll sendiri */
+}
+
+
+.procurement-card:hover {
+    box-shadow: 0 10px 24px rgba(0, 155, 76, 0.2);
+    transform: translateY(-2px);
+}
+
+h1 {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--bni-green-dark);
+    margin-bottom: 0.4rem;
+    text-align: center;
+}
+
+.note {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1.2rem;
+}
+
+label {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 6px;
+    display: block;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 14px;
+    background: #fff;
+    transition: border var(--transition), box-shadow var(--transition);
+    box-sizing: border-box;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--bni-green);
+    box-shadow: 0 0 0 3px rgba(0, 155, 76, 0.15);
+}
+
+textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+.actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 1rem;
+}
+
+button {
+    border: none;
+    border-radius: var(--radius);
+    padding: 10px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background var(--transition), transform 0.2s ease;
+    min-width: 110px;
+    /* 🔹 Biar tombol seragam */
+}
+
+button[type="submit"] {
+    background: linear-gradient(90deg, var(--bni-green), var(--bni-green-dark));
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 155, 76, 0.25);
+}
+
+button[type="submit"]:hover {
+    background: linear-gradient(90deg, var(--bni-green-dark), #005f2b);
+    transform: translateY(-1px);
+}
+
+button.secondary {
+    background: #f3f4f6;
+    color: #111827;
+}
+
+button.secondary:hover {
+    background: #e5e7eb;
+}
+
+@media (max-width: 720px) {
+    form {
+        grid-template-columns: 1fr;
+    }
+
+    .actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .procurement-card {
+        padding: 1.5rem;
+        max-width: 90%;
+    }
+}
