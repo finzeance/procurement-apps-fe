@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
         <Route path="/about" element={<About />} />
-        <Route path="/dashboard" element={<DashboardLayout><Dashboard /></DashboardLayout>} />
+        <Route path="/dashboard" element={<DashboardLayout></DashboardLayout>} />
         <Route path="/procurement-form" element={<DashboardLayout><ProcurementForm /></DashboardLayout>} />
       </Routes>
     </BrowserRouter>

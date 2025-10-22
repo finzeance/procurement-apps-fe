@@ -1,44 +1,22 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
-
-:root {
-    --bni-green: #009b4c;
-    --bni-green-dark: #007a3a;
-    --bni-orange: #ff6600;
-    --card: #ffffff;
-    --border: #e5e7eb;
-    --muted: #6b7280;
-    --radius: 10px;
-    --transition: 0.25s ease;
-}
-
+/* ===== Procurement Form ===== */
 .procurement-wrapper {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    /* ⬅ biar mulai dari atas, bukan center */
-    padding: 2rem 0;
-    background: transparent;
+    padding: 2rem;
     width: 100%;
-    height: auto;
-    overflow: visible;
-    /* ✅ biar tidak bikin scroll sendiri */
     box-sizing: border-box;
+    transition: background-color 0.3s ease;
 }
 
-
-
 .procurement-card {
-    background: var(--card);
-    border-radius: var(--radius);
+    background: #fff;
+    border-radius: 12px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
     padding: 2rem;
     width: 100%;
     max-width: 850px;
-    transition: all var(--transition);
-    overflow: visible;
-    /* ✅ pastikan tidak scroll sendiri */
+    transition: all 0.3s ease;
 }
-
 
 .procurement-card:hover {
     box-shadow: 0 10px 24px rgba(0, 155, 76, 0.2);
@@ -48,29 +26,32 @@
 h1 {
     font-size: 22px;
     font-weight: 600;
-    color: var(--bni-green-dark);
+    color: #007a3a;
     margin-bottom: 0.4rem;
     text-align: center;
+    transition: color 0.3s ease;
 }
 
 .note {
     font-size: 13px;
-    color: var(--muted);
+    color: #6b7280;
     margin-bottom: 1.5rem;
     text-align: center;
+    transition: color 0.3s ease;
 }
 
 form {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem 1.2rem;
+    gap: 1rem 1.5rem;
 }
 
 label {
     font-size: 13px;
-    color: var(--muted);
+    color: #6b7280;
     margin-bottom: 6px;
     display: block;
+    transition: color 0.3s ease;
 }
 
 input,
@@ -78,19 +59,17 @@ select,
 textarea {
     width: 100%;
     padding: 8px 10px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
     font-size: 14px;
-    background: #fff;
-    transition: border var(--transition), box-shadow var(--transition);
-    box-sizing: border-box;
+    transition: border 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
     outline: none;
-    border-color: var(--bni-green);
+    border-color: #009b4c;
     box-shadow: 0 0 0 3px rgba(0, 155, 76, 0.15);
 }
 
@@ -113,37 +92,36 @@ textarea {
 
 button {
     border: none;
-    border-radius: var(--radius);
+    border-radius: 8px;
     padding: 10px 16px;
     font-size: 14px;
     cursor: pointer;
     font-weight: 500;
-    transition: background var(--transition), transform 0.2s ease;
     min-width: 110px;
-    /* 🔹 Biar tombol seragam */
+    transition: all 0.3s ease;
 }
 
 button[type="submit"] {
-    background: linear-gradient(90deg, var(--bni-green), var(--bni-green-dark));
+    background: linear-gradient(90deg, #009b4c, #007a3a);
     color: #fff;
-    box-shadow: 0 4px 10px rgba(0, 155, 76, 0.25);
 }
 
 button[type="submit"]:hover {
-    background: linear-gradient(90deg, var(--bni-green-dark), #005f2b);
+    background: linear-gradient(90deg, #007a3a, #005f2b);
     transform: translateY(-1px);
 }
 
 button.secondary {
     background: #f3f4f6;
-    color: #111827;
+    color: #111;
 }
 
 button.secondary:hover {
     background: #e5e7eb;
 }
 
-@media (max-width: 720px) {
+/* Media Queries */
+@media (max-width: 768px) {
     form {
         grid-template-columns: 1fr;
     }
@@ -155,6 +133,29 @@ button.secondary:hover {
 
     .procurement-card {
         padding: 1.5rem;
-        max-width: 90%;
+        max-width: 95%;
     }
+}
+
+/* ===== Dark Mode Procurement Form ===== */
+body.dark .procurement-card {
+    background: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark input,
+body.dark select,
+body.dark textarea {
+    background: #2c2c2c;
+    color: #fff;
+    border-color: #555;
+}
+
+body.dark button.secondary {
+    background: #333;
+    color: #fff;
+}
+
+body.dark button[type="submit"] {
+    background: linear-gradient(90deg, #009b4c, #005f2b);
 }

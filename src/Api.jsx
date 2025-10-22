@@ -15,10 +15,15 @@ const api = axios.create({
 // Interceptor untuk menambahkan access token di setiap request
 api.interceptors.request.use(
   (config) => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
     return config;
   },
   (error) => Promise.reject(error)
 );
+
 
 // Interceptor untuk auto-refresh token jika access token kadaluarsa
 api.interceptors.response.use(
