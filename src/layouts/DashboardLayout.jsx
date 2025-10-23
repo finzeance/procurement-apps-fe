@@ -40,9 +40,9 @@ export default function DashboardLayout({ children }) {
                 <Link to="/procurement-form">
                     <FaClipboardList /> Pengadaan
                 </Link>
-                <a href="#">
+                <Link to="/manage-user">
                     <FaUserPlus /> Registrasi User
-                </a>
+                </Link>
             </aside>
 
             {/* Header */}

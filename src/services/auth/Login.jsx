@@ -8,6 +8,7 @@ const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
 
     const requestInProgress = useRef(false); // mencegah double submit
@@ -18,6 +19,7 @@ const Login = () => {
         if (requestInProgress.current) return;
         requestInProgress.current = true;
         setLoading(true);
+        setErrorMessage("");
 
         try {
             const response = await api.post("/auth/login", { username, password });
@@ -25,6 +27,7 @@ const Login = () => {
 
             // ✅ validasi token: pastikan tidak null atau kosong
             if (!accessToken || !refreshToken) {
+                setErrorMessage(message || "Username atau password salah!")
                 // tampilkan pesan dari backend atau fallback message
                 notifications.show({
                     title: "Login gagal",
@@ -57,6 +60,8 @@ const Login = () => {
             } else if (backendMessage.includes("setelah beberapa saat")) {
                 errorMessage = "Login anda dibatasi, silahkan coba lagi beberapa saat.";
             }
+
+            setErrorMessage(errorMessage);
 
             notifications.show({
                 title: "Login gagal",
