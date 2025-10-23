@@ -1,11 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import toast, { Toaster } from "react-hot-toast";
 import "../styles/ProcurementForm.css";
+import api from "../Api";
 
 export default function ProcurementForm() {
     const [loading, setLoading] = useState(false);
-    const apiUrl = "/api/procurements";
+    const [budgetTypes, setBudgetTypes] = useState([]);
+    const [paymentTypes, setPaymentTypes] = useState([]);
+
+    useEffect(() => {
+        const fetchTypes = async () => {
+            try {
+                const res = await api.get("/procurement/budget-type");
+                setBudgetTypes(res.data)
+            } catch (err) {
+                console.error("Gagal load jenis pengadaan: ", err);
+            }
+        };
+
+        fetchTypes();
+
+        const fetchPayments = async () => {
+            try {
+                const res = await api.get("/procurement/payment-type");
+                setPaymentTypes(res.data);
+            } catch (err) {
+                console.error("Gagal load metode pembayaran: ", err);
+            }
+        };
+
+        fetchPayments();
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -13,6 +39,9 @@ export default function ProcurementForm() {
 
         const formData = new FormData(e.target);
         const payload = Object.fromEntries(formData.entries());
+
+        payload.contractNumber = payload.contractNumber?.trim() || null;
+        payload.spkNumber = payload.spkNumber?.trim() || null;
 
         if (!payload.name) return showError("Kolom 'Nama' wajib diisi.");
         if (!payload.type) return showError("Kolom 'Jenis Pengadaan' wajib diisi.");
@@ -22,21 +51,11 @@ export default function ProcurementForm() {
             return showError("Format email PIC tidak valid.");
 
         try {
-            const res = await fetch(apiUrl, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-            });
-
-            if (res.ok) {
-                toast.success("Data berhasil dikirim 🎉", { duration: 3000 });
-                e.target.reset();
-            } else {
-                const msg = await res.text();
-                toast.error("Gagal mengirim data: " + msg);
-            }
+            const res = await api.post("/procurement", payload);
+            toast.success(res.data.message || "Data berhasil dikirim", { duration: 3000 });
+            e.target.reset();
         } catch (err) {
-            toast.error("Kesalahan jaringan: " + err.message);
+            toast.error("Kesalahan jaringan: " + (err.response?.data?.message || err.message));
         } finally {
             setLoading(false);
         }
@@ -75,8 +94,9 @@ export default function ProcurementForm() {
                         <label>Jenis Pengadaan *</label>
                         <select name="type" required>
                             <option value="">-- Pilih Type --</option>
-                            <option value="CAPEX">CAPEX</option>
-                            <option value="OPEX">OPEX</option>
+                            {budgetTypes.map((t, idx) => (
+                                <option key={idx} value={t}>{t}</option>
+                            ))}
                         </select>
                     </div>
 
@@ -89,8 +109,9 @@ export default function ProcurementForm() {
                         <label>Metode Pembayaran *</label>
                         <select name="paymentType" required>
                             <option value="">-- Pilih Metode Pembayaran --</option>
-                            <option value="ONEYEAR">ONEYEAR</option>
-                            <option value="MULTIYEARS">MULTIYEARS</option>
+                            {paymentTypes.map((t, idx) => (
+                                <option key={idx} value={t}>{t}</option>
+                            ))}
                         </select>
                     </div>
 

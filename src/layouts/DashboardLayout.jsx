@@ -26,7 +26,6 @@ export default function DashboardLayout({ children }) {
             }
         } catch (error) {
             console.error("Logout error: ", error);
-            alert("Terjadi kesalahan saat logout");
         }
     };
 
